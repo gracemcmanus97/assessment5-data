@@ -1,17 +1,30 @@
+requite ('dotenev').config ();
+const {CONNECTION_STRING} = process.env;
+const Sequelize = require('sequelize');
+
+const sequelize = new Sequelize(CONNECTION_STRING, {
+    dialect: 'postgres',
+    dialectOptions : {
+        ssl: {
+            rejectUnauthorized: false
+        }
+    }
+})
 
 
 module.exports = {
     seed: (req, res) => {
         sequelize.query(`
-            drop table if exists cities;
-            drop table if exists countries;
+        SELECT * FROM COUNTRIES;
+        `)
+        .then(dbRes => res.status(200).send(dbRes[0]))
+        .catch(err => console.log(err))
+    },
+    creatCity: (req, res) => {
+        const {name, rating, countryID}
+    }
 
-            create table countries (
-                country_id serial primary key, 
-                name varchar
-            );
 
-            *****YOUR CODE HERE*****
 
             insert into countries (name)
             values ('Afghanistan'),
